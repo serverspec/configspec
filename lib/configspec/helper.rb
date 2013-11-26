@@ -1,5 +1,6 @@
 require 'configspec/helper/exec'
 require 'configspec/helper/ssh'
+require 'configspec/helper/dockerfile'
 require 'configspec/helper/detect_os'
 require 'configspec/helper/redhat'
 
