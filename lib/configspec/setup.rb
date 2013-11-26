@@ -32,7 +32,7 @@ module Configspec
           print("Input target host name: ")
           @hostname = $stdin.gets.chomp
         end
-      else
+      elsif @backend_type == 'Exec'
         @hostname = 'localhost'
       end
 
@@ -65,6 +65,7 @@ Select a backend type:
 
   1) SSH
   2) Exec (local)
+  3) Dockerfile
 
 Select number: 
 EOF
@@ -72,7 +73,7 @@ EOF
       num = $stdin.gets.to_i - 1
       puts
 
-      @backend_type = [ 'Ssh', 'Exec' ][num] || 'Exec'
+      @backend_type = [ 'Ssh', 'Exec', 'Dockerfile' ][num] || 'Exec'
     end
 
     def self.ask_windows_backend
@@ -201,7 +202,7 @@ EOF
     def self.spec_helper_template
       template = <<-EOF
 require 'configspec'
-<% if @os_type == 'UN*X' -%>
+<% if @os_type == 'UN*X' and @backend_type != 'Dockerfile' -%>
 require 'pathname'
 <% end -%>
 <% if @backend_type == 'Ssh' -%>
@@ -212,13 +213,13 @@ require 'winrm'
 <% end -%>
 
 include Configspec::Helper::<%= @backend_type %>
-<% if @os_type == 'UN*X' -%>
+<% if @os_type == 'UN*X' && @backend_type != 'Dockerfile' -%>
 include Configspec::Helper::DetectOS
 <% else  -%>
-include Configspec::Helper::Windows
+include Configspec::Helper::RedHat
 <% end -%>
 
-<% if @os_type == 'UN*X' -%>
+<% if @os_type == 'UN*X' && @backend_type != 'Dockerfile' -%>
 RSpec.configure do |c|
   if ENV['ASK_SUDO_PASSWORD']
     require 'highline/import'
