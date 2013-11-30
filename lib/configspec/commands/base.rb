@@ -16,7 +16,7 @@ module Configspec
         Shellwords.shellescape(str)
       end
 
-      def check_installed(package, version=nil)
+      def install(package, version=nil)
         raise NotImplementedError.new
       end
     end
