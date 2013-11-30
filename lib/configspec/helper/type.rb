@@ -1,7 +1,7 @@
 module Configspec
   module Helper
     module Type
-      types = %w( base package )
+      types = %w( base package dockerfile )
 
       types.each {|type| require "configspec/type/#{type}" }
 

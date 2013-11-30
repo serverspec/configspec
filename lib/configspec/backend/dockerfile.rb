@@ -15,6 +15,10 @@ module Configspec
         { :stdout => nil, :stderr => nil,
           :exit_status => 0, :exit_signal => nil }
       end
+
+      def from(base)
+        @lines << "FROM #{base}"
+      end
     end
   end
 end
