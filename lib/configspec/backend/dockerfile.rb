@@ -2,7 +2,7 @@ require 'singleton'
 
 module Configspec
   module Backend
-    class Dockerfile < Base
+    class Dockerfile < SpecInfra::Backend::Base
       def initialize
         @lines = []
         ObjectSpace.define_finalizer(self) {

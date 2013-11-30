@@ -212,11 +212,15 @@ require 'net/ssh'
 require 'winrm'
 <% end -%>
 
+<% if @backend_type == 'Dockerfile' -%>
 include Configspec::Helper::<%= @backend_type %>
+<% else -%>
+include SpecInfra::Helper::<%= @backend_type %>
+<% end -%>
 <% if @os_type == 'UN*X' && @backend_type != 'Dockerfile' -%>
-include Configspec::Helper::DetectOS
+include SpecInfra::Helper::DetectOS
 <% else  -%>
-include Configspec::Helper::RedHat
+include SpecInfra::Helper::RedHat
 <% end -%>
 
 <% if @os_type == 'UN*X' && @backend_type != 'Dockerfile' -%>
