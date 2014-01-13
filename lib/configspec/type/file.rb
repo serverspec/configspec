@@ -2,7 +2,7 @@ module Configspec
   module Type
     class File < Base
       def sourced_from?(from)
-        backend.copy(@name, from)
+        backend.copy_file(from, @name)
       end
     end
   end
