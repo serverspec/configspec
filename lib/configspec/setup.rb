@@ -207,6 +207,7 @@ require 'pathname'
 <% end -%>
 <% if @backend_type == 'Ssh' -%>
 require 'net/ssh'
+require 'net/scp'
 <% end -%>
 <% if @backend_type == 'WinRM' -%>
 require 'winrm'
@@ -242,6 +243,7 @@ RSpec.configure do |c|
     host  = File.basename(Pathname.new(file).dirname)
     if c.host != host
       c.ssh.close if c.ssh
+      c.scp.close if c.scp
       c.host  = host
       options = Net::SSH::Config.for(c.host)
       user    = options[:user] || Etc.getlogin
@@ -263,6 +265,7 @@ RSpec.configure do |c|
       end
     <%- end -%>
       c.ssh   = Net::SSH.start(host, user, options)
+      c.scp   = Net::SCP.start(host, user, options)
     end
   end
   <%- end -%>
