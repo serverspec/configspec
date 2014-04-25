@@ -214,7 +214,7 @@ require 'winrm'
 <% end -%>
 
 <% if @backend_type == 'Dockerfile' -%>
-include Configspec::Helper::<%= @backend_type %>
+include SpecInfra::Helper::<%= @backend_type %>
 <% else -%>
 include SpecInfra::Helper::<%= @backend_type %>
 <% end -%>
